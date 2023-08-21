@@ -1,0 +1,25 @@
+﻿@model IddyBiddyUrl.Models.CreateShortUrl
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="content">
+    <div class="url-form">
+        @using (Html.BeginForm("CreateShortUrl", "", FormMethod.Post))
+        {
+            <label for="original-url">URL to Shorten:</label>
+            @Html.EditorFor(m => m.Url, new {htmlAttributes = new { id="original-url", name="original-url", required=true }})
+            @Html.ValidationMessageFor(m => m.Url)
+
+            <a href="#" id="toggle-short-link">Toggle Custom Short Link</a>
+
+            <div id="short-link-container" style="display: none;">
+                <label for="short-link">Choose your own Url</label>
+                @Html.EditorFor(m => m.ShortLink, new {htmlAttributes = new { id="short-link", name="short-link" }})
+                @Html.ValidationMessageFor(m => m.ShortLink)
+            </div>
+            <button type="submit" id="shorten-btn">Shorten</button>
+            @Html.HiddenFor(m => m.GenerateShortLink, new { id="generate-short-link" })
+        }     
+    </div>
+</div>
