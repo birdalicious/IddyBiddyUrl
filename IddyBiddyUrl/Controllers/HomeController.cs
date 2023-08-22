@@ -45,7 +45,7 @@ namespace IddyBiddyUrl.Controllers
                         ModelState.AddModelError("Url", error.Message);
                     }
 
-                    return View("Index");
+                    return View("Index", model);
                 });
         }
 
