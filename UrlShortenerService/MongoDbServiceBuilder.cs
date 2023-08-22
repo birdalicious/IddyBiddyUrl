@@ -9,7 +9,7 @@ namespace UrlShortenerService
     {
         public static IServiceCollection AddMongoDbClient(this IServiceCollection services)
         {
-            return services.AddScoped<IMongoClient, MongoClient>(s =>
+            return services.AddSingleton<IMongoClient, MongoClient>(s =>
             {
                 var connectionString = s.GetRequiredService<IConfiguration>().GetConnectionString("MongoDb");
                 return new MongoClient(connectionString);
@@ -17,9 +17,12 @@ namespace UrlShortenerService
         }
         public static IServiceCollection AddMongoDbCollections(this IServiceCollection services)
         {
-            services.AddScoped<IMongoCollection<Mapping>>(s => 
-                s.GetRequiredService<IMongoClient>().GetDatabase("IddyBiddy").GetCollection<Mapping>("mappings")
-            );
+            services.AddScoped<IMongoCollection<Mapping>>(s => {
+                var c = s.GetRequiredService<IMongoClient>().GetDatabase("IddyBiddy").GetCollection<Mapping>("mappings");
+
+                c.Indexes.CreateOne(new CreateIndexModel<Mapping>("{ ShortLink: 1 }", new CreateIndexOptions { Unique = true }));
+                return c;
+            });
 
             return services;
         }
