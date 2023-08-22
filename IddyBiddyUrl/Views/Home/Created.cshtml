@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "Created";
+}
+@model IddyBiddyUrl.Models.CreateShortUrl
+
+<h1>Created</h1>
+<h2><a id="created-link" data-link="@Model.ShortLink"></a></h2>
+@Html.ActionLink("Create another link", "Index", "Home")
+
+<script>
+    const link = document.getElementById("created-link");
+    link.href = window.location.origin + "/" + link.dataset.link
+    link.innerHTML = window.location.origin + "/" + link.dataset.link
+</script>

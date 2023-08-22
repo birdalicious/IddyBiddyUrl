@@ -1,4 +1,4 @@
-﻿namespace IddyBiddyUrl.Logic
+﻿namespace IddyBiddyUrl.Validation
 {
     public class UrlNotValidException : ValidationException
     {

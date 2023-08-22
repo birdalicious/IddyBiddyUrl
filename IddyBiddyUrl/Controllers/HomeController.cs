@@ -28,10 +28,12 @@ namespace IddyBiddyUrl.Controllers
         {
             ModelState.Clear();
 
-            var createResult = await _mappingService.Create(model.Url, model.ShortLink);
+            var createResult = model.GenerateShortLink
+                ? await _mappingService.Create(model.Url)
+                : await _mappingService.Create(model.Url, model.ShortLink);
 
             return createResult.Match(
-                success => View("Index"),
+                success => View("Created", new CreateShortUrl { ShortLink = success.ShortLink, Url = success.Url}),
                 error =>
                 {
                     if (error is ShortLinkNotAvailableException)

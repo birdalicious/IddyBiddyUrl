@@ -14,6 +14,7 @@ namespace IddyBiddyUrl
             builder.Services.AddMongoDbCollections();
 
             builder.Services.AddScoped<MappingService>();
+            builder.Services.AddHttpClient<MappingService>();
 
 
             var app = builder.Build();

@@ -7,10 +7,12 @@ namespace IddyBiddyUrl.Logic
     public class MappingService
     {
         private IMongoCollection<Mapping> _mappings;
+        private HttpClient _httpClient;
 
-        public MappingService(IMongoCollection<Mapping> mappings)
+        public MappingService(IMongoCollection<Mapping> mappings, HttpClient httpClient)
         {
-            _mappings = mappings;   
+            _mappings = mappings;
+            _httpClient = httpClient;
         }
 
         public async Task<Mapping?> Get(string shortLink)
@@ -19,13 +21,31 @@ namespace IddyBiddyUrl.Logic
             return await cursor.FirstOrDefaultAsync();
         }
 
+        public async Task<Result<Mapping, ValidationException>> Create(string url)
+        {
+            string shortLink;
+            try
+            {
+                shortLink = await GetUnquieShortLinkAsync();
+            }
+            catch(CouldNotGenerateShortLinkException ex)
+            {
+                return ex;
+            }
+
+            return await Create(url, shortLink);
+        }
+
         public async Task<Result<Mapping, ValidationException>> Create(string url, string shortLink)
         {
-            var client = new HttpClient();
+            if(string.IsNullOrWhiteSpace(shortLink))
+            {
+                return new ShortLinkNotAvailableException("Must provide non-blank short link");
+            }
 
             try
             {
-                var response = await client.GetAsync(url);
+                var response = await _httpClient.GetAsync(url);
                 if(!response.IsSuccessStatusCode)
                 {
                     return new UrlNotValidException();
@@ -39,10 +59,6 @@ namespace IddyBiddyUrl.Logic
             {
                 return new UrlNotValidException();
             }
-            finally
-            {
-                client.Dispose();
-            }
 
             try
             {
@@ -55,6 +71,31 @@ namespace IddyBiddyUrl.Logic
             {
                 return new ShortLinkNotAvailableException();
             }
+        }
+
+        private async Task<string> GetUnquieShortLinkAsync()
+        {
+            const int shortLinkLength = 5;
+            Mapping? mapping = null;
+            string shortLinkCandiate;
+
+            var tries = 0;
+            do
+            {
+                shortLinkCandiate = RandomStringGenerator.GetString(shortLinkLength + tries);
+                var cursor = await _mappings.FindAsync(m => m.ShortLink == shortLinkCandiate);
+                mapping = await cursor.FirstOrDefaultAsync();
+
+                tries++;
+            }
+            while (mapping is not null && tries < 3);
+
+            if(mapping is not null)
+            {
+                throw new CouldNotGenerateShortLinkException();
+            }
+
+            return shortLinkCandiate;
         }
     }
 }
