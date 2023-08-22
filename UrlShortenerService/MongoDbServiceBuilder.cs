@@ -1,9 +1,9 @@
-﻿using IddyBiddyUrl.Domain;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using UrlShortenerService.Mappings;
 
-namespace IddyBiddyUrl
+namespace UrlShortenerService
 {
     public static class MongoDbServiceBuilder
     {

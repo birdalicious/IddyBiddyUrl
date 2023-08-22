@@ -1,4 +1,5 @@
-using IddyBiddyUrl.Logic;
+using UrlShortenerService;
+using UrlShortenerService.Mappings;
 
 namespace IddyBiddyUrl
 {

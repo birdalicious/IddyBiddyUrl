@@ -1,8 +1,8 @@
-﻿using IddyBiddyUrl.Logic;
-using IddyBiddyUrl.Models;
+﻿using IddyBiddyUrl.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Diagnostics;
+using UrlShortenerService.Mappings;
+using UrlShortenerService.Validation;
 
 namespace IddyBiddyUrl.Controllers
 {

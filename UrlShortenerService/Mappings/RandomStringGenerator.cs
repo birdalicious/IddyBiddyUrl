@@ -1,13 +1,14 @@
-﻿namespace IddyBiddyUrl.Logic
+﻿namespace UrlShortenerService.Mappings
 {
     public static class RandomStringGenerator
     {
         public static string GetString(int length = 4)
         {
-            if (length <= 0) {
+            if (length <= 0)
+            {
                 throw new ArgumentOutOfRangeException("length");
             }
-            if(length > 24)
+            if (length > 24)
             {
                 throw new ArgumentOutOfRangeException("length");
             }

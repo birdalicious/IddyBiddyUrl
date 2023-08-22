@@ -1,4 +1,4 @@
-﻿namespace IddyBiddyUrl.Validation
+﻿namespace UrlShortenerService.Validation
 {
     public class ShortLinkNotAvailableException : ValidationException
     {

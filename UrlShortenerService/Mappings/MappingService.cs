@@ -1,8 +1,7 @@
-﻿using IddyBiddyUrl.Domain;
-using MongoDB.Driver;
-using System.Reflection.Metadata.Ecma335;
+﻿using MongoDB.Driver;
+using UrlShortenerService.Validation;
 
-namespace IddyBiddyUrl.Logic
+namespace UrlShortenerService.Mappings
 {
     public class MappingService
     {
@@ -28,7 +27,7 @@ namespace IddyBiddyUrl.Logic
             {
                 shortLink = await GetUnquieShortLinkAsync();
             }
-            catch(CouldNotGenerateShortLinkException ex)
+            catch (CouldNotGenerateShortLinkException ex)
             {
                 return ex;
             }
@@ -38,7 +37,7 @@ namespace IddyBiddyUrl.Logic
 
         public async Task<Result<Mapping, ValidationException>> Create(string url, string shortLink)
         {
-            if(string.IsNullOrWhiteSpace(shortLink))
+            if (string.IsNullOrWhiteSpace(shortLink))
             {
                 return new ShortLinkNotAvailableException("Must provide non-blank short link");
             }
@@ -46,12 +45,12 @@ namespace IddyBiddyUrl.Logic
             try
             {
                 var response = await _httpClient.GetAsync(url);
-                if(!response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
                 {
                     return new UrlNotValidException();
                 }
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 return new UrlNotValidException();
             }
@@ -67,7 +66,7 @@ namespace IddyBiddyUrl.Logic
                 return mapping;
 
             }
-            catch(MongoWriteException)
+            catch (MongoWriteException)
             {
                 return new ShortLinkNotAvailableException();
             }
@@ -90,7 +89,7 @@ namespace IddyBiddyUrl.Logic
             }
             while (mapping is not null && tries < 3);
 
-            if(mapping is not null)
+            if (mapping is not null)
             {
                 throw new CouldNotGenerateShortLinkException();
             }

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
-
-namespace IddyBiddyUrl.Logic
+﻿namespace UrlShortenerService
 {
     public class Result<T, TError>
     {

@@ -1,5 +1,5 @@
-﻿using IddyBiddyUrl.Logic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using UrlShortenerService.Mappings;
 
 namespace IddyBiddyUrl.Controllers
 {
