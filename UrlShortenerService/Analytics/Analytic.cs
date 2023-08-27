@@ -1,21 +1,20 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace UrlShortenerService.Mappings
+namespace UrlShortenerService.Analytics
 {
-    public record Mapping
+    public record Analytic
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; } = null!;
 
-        public required string ShortLink { get; set; }
-
-        public required string Url { get; set; }
+        public required DateTimeOffset DateTime { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
         public string? LinkOwnerId { get; set; }
 
-        public required bool IsActive { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public required string LinkId { get; set; }
     }
 }

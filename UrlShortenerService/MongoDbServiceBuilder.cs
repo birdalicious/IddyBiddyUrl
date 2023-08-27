@@ -1,6 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿// Ignore Spelling: Mongo
+
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
+using UrlShortenerService.Analytics;
 using UrlShortenerService.Mappings;
 
 namespace UrlShortenerService
@@ -23,6 +26,9 @@ namespace UrlShortenerService
                 c.Indexes.CreateOne(new CreateIndexModel<Mapping>("{ ShortLink: 1 }", new CreateIndexOptions { Unique = true }));
                 return c;
             });
+
+            services.AddScoped<IMongoCollection<Analytic>>(s =>
+                s.GetRequiredService<IMongoClient>().GetDatabase("IddyBiddy").GetCollection<Analytic>("analytics"));
 
             return services;
         }

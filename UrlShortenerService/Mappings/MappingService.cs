@@ -14,7 +14,7 @@ namespace UrlShortenerService.Mappings
             _httpClient = httpClient;
         }
 
-        public async Task<Mapping?> Get(string shortLink)
+        public async Task<Mapping?> GetAsync(string shortLink)
         {
             var cursor = await _mappings.FindAsync(m => m.ShortLink == shortLink && m.IsActive == true);
             return await cursor.FirstOrDefaultAsync();
