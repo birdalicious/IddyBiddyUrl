@@ -1,5 +1,8 @@
+using System.Runtime.Caching;
 using UrlShortenerService;
+using UrlShortenerService.Analytics;
 using UrlShortenerService.Mappings;
+using UrlShortenerService.Routing;
 
 namespace IddyBiddyUrl
 {
@@ -14,7 +17,11 @@ namespace IddyBiddyUrl
             builder.Services.AddMongoDbClient();
             builder.Services.AddMongoDbCollections();
 
+            builder.Services.AddSingleton<MemoryCache>(_ => new MemoryCache("RoutingCache"));
+
+            builder.Services.AddScoped<RoutingService>();
             builder.Services.AddScoped<MappingService>();
+            builder.Services.AddScoped<AnalyticService>();
             builder.Services.AddHttpClient<MappingService>();
 
 
