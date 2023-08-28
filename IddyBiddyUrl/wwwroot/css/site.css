@@ -36,6 +36,10 @@ body {
     width: 50vw;
 }
 
+.error {
+    color: #FF9494;
+}
+
 .url-form label {
     display: block;
     margin-bottom: 5px;
