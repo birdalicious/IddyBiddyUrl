@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "Not Found";
+}
+
+<h1>Not Found</h1>
+<p>Looks like that link doesn't exist</p>
+
+<div>
+@Html.ActionLink("Create the link?", "CreateShortUrl", "Home", new CreateShortUrl { ShortLink = ViewBag.ShortLink})
+</div>
+@Html.ActionLink("Go to Home", "Index", "Home")
+

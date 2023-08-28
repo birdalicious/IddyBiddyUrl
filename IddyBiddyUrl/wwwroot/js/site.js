@@ -17,6 +17,6 @@ if (document.getElementById('short-link').value !== '') {
 toggleButton.addEventListener('click', () => {
     let shortLinkDisplayed = shortLinkContainer.style.display === 'none'
     shortLinkContainer.style.display = shortLinkDisplayed ? 'block' : 'none';
-    toggleButton.innerHTML = shortLinkDisplayed ? 'Choose your own Url' : 'Hide custom Url';
+    toggleButton.innerHTML = shortLinkDisplayed ? 'Hide custom Url' : 'Choose your own Url';
     generateShortLink.value = !shortLinkDisplayed;
 });

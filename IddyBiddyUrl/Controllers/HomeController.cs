@@ -23,6 +23,12 @@ namespace IddyBiddyUrl.Controllers
             return View();
         }
 
+        [HttpGet("/Home/CreateShortUrl")]
+        public IActionResult CreateShortLink(CreateShortUrl model)
+        {
+            return View("Index", model);
+        }
+
         [HttpPost("/Home/CreateShortUrl")]
         public async Task<IActionResult> CreateShortLinkAsync(CreateShortUrl model)
         {
