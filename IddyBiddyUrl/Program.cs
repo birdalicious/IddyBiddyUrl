@@ -17,7 +17,7 @@ namespace IddyBiddyUrl
             builder.Services.AddMongoDbClient();
             builder.Services.AddMongoDbCollections();
 
-            builder.Services.AddSingleton<MemoryCache>(_ => new MemoryCache("RoutingCache"));
+            builder.Services.AddMemoryCache();
 
             builder.Services.AddScoped<RoutingService>();
             builder.Services.AddScoped<MappingService>();
