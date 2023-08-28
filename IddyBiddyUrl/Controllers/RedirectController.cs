@@ -18,7 +18,8 @@ namespace IddyBiddyUrl.Controllers
             var mapping = await _routingService.RouteShortLinkAsync(shortLink);
             if (mapping is null)
             {
-                return NotFound();
+                ViewBag.ShortLink = shortLink;
+                return View("NotFound");
             }
             return Redirect(mapping.Url);
         }
