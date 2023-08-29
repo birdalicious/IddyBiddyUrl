@@ -20,15 +20,26 @@ namespace UrlShortenerService
         }
         public static IServiceCollection AddMongoDbCollections(this IServiceCollection services)
         {
-            services.AddScoped<IMongoCollection<Mapping>>(s => {
+            services.AddScoped<IMongoCollection<Mapping>>(s => 
+            {
                 var c = s.GetRequiredService<IMongoClient>().GetDatabase("IddyBiddy").GetCollection<Mapping>("mappings");
 
                 c.Indexes.CreateOne(new CreateIndexModel<Mapping>("{ ShortLink: 1 }", new CreateIndexOptions { Unique = true }));
                 return c;
             });
 
-            services.AddScoped<IMongoCollection<Analytic>>(s =>
-                s.GetRequiredService<IMongoClient>().GetDatabase("IddyBiddy").GetCollection<Analytic>("analytics"));
+            services.AddScoped<IMongoCollection<Analytic>>(s => 
+            {
+                var c = s.GetRequiredService<IMongoClient>().GetDatabase("IddyBiddy").GetCollection<Analytic>("analytics");
+
+                c.Indexes.CreateMany(new List<CreateIndexModel<Analytic>>
+                {
+                    new("{ LinkId: 1 }"),
+                    new("{ LinkOwnerId: 1 }"),
+                });
+
+                return c;
+            });
 
             return services;
         }
