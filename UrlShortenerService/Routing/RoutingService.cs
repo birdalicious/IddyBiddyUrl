@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using System.Runtime.Caching;
 using UrlShortenerService.Analytics;
 using UrlShortenerService.Mappings;
 
