@@ -1,25 +1,21 @@
 ﻿using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UrlShortenerService.Mappings;
+using System.Runtime.CompilerServices;
 
 namespace UrlShortenerService.Analytics
 {
     public class AnalyticService
     {
-        private IMongoCollection<Analytic> _analytics;
 
-        public AnalyticService(IMongoCollection<Analytic> analytics)
+        private AnalyticsBuffer _analyticsBuffer;
+
+        public AnalyticService(IMongoCollection<Analytic> analytics, AnalyticsBuffer buffer, string writeConcernLevel = "1")
         {
-            _analytics = analytics.WithWriteConcern(WriteConcern.Unacknowledged);
+            _analyticsBuffer = buffer;
         }
 
         public Task LogAccessAsync(string LinkId)
         {
-            return _analytics.InsertOneAsync(new Analytic
+            return _analyticsBuffer.Add(new Analytic
             {
                 LinkId = LinkId,
                 LinkOwnerId = null,
