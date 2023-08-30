@@ -14,15 +14,10 @@ namespace IddyBiddyUrl
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddMongoDbClient();
-            builder.Services.AddMongoDbCollections();
 
             builder.Services.AddMemoryCache();
-
-            builder.Services.AddScoped<RoutingService>();
-            builder.Services.AddScoped<MappingService>();
-            builder.Services.AddScoped<AnalyticService>();
             builder.Services.AddHttpClient<MappingService>();
+            builder.Services.AddUrlShorteningServices();
 
 
             var app = builder.Build();
