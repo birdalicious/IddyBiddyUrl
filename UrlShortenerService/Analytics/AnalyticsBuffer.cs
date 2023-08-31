@@ -18,7 +18,7 @@ namespace UrlShortenerService.Analytics
 
         public AnalyticsBuffer(IMongoCollection<Analytic> analyticsCollection, string writeConcern = "majority", int bufferSize = 1) 
         {
-            _analyticsCollection = analyticsCollection.WithWriteConcern(MapWriteConcerLevel(writeConcern));
+            _analyticsCollection = analyticsCollection.WithWriteConcern(MapWriteConcernLevel(writeConcern));
             BufferSize = bufferSize;
         }
 
@@ -41,7 +41,7 @@ namespace UrlShortenerService.Analytics
         {
             return Flush();
         }
-        private WriteConcern MapWriteConcerLevel(string level)
+        private WriteConcern MapWriteConcernLevel(string level)
         {
             if (level.ToLower() == "majority")
             {

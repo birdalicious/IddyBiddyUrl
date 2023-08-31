@@ -25,7 +25,7 @@ namespace UrlShortenerService.Mappings
             string shortLink;
             try
             {
-                shortLink = await GetUnquieShortLinkAsync();
+                shortLink = await GetUniqueShortLinkAsync();
             }
             catch (CouldNotGenerateShortLinkException ex)
             {
@@ -72,17 +72,17 @@ namespace UrlShortenerService.Mappings
             }
         }
 
-        private async Task<string> GetUnquieShortLinkAsync()
+        private async Task<string> GetUniqueShortLinkAsync()
         {
             const int shortLinkLength = 5;
             Mapping? mapping = null;
-            string shortLinkCandiate;
+            string shortLinkCandidate;
 
             var tries = 0;
             do
             {
-                shortLinkCandiate = RandomStringGenerator.GetString(shortLinkLength + tries);
-                var cursor = await _mappings.FindAsync(m => m.ShortLink == shortLinkCandiate);
+                shortLinkCandidate = RandomStringGenerator.GetString(shortLinkLength + tries);
+                var cursor = await _mappings.FindAsync(m => m.ShortLink == shortLinkCandidate);
                 mapping = await cursor.FirstOrDefaultAsync();
 
                 tries++;
@@ -94,7 +94,7 @@ namespace UrlShortenerService.Mappings
                 throw new CouldNotGenerateShortLinkException();
             }
 
-            return shortLinkCandiate;
+            return shortLinkCandidate;
         }
     }
 }
